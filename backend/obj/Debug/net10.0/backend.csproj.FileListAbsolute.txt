@@ -146,3 +146,4 @@ C:\Users\johne\Documents\Coding\BYU\IS 413\Mission11Assignment\backend\bin\Debug
 C:\Users\johne\Documents\Coding\BYU\IS 413\Mission11Assignment\backend\bin\Debug\net10.0\runtimes\win-arm64\native\e_sqlite3.dll
 C:\Users\johne\Documents\Coding\BYU\IS 413\Mission11Assignment\backend\bin\Debug\net10.0\runtimes\win-x64\native\e_sqlite3.dll
 C:\Users\johne\Documents\Coding\BYU\IS 413\Mission11Assignment\backend\bin\Debug\net10.0\runtimes\win-x86\native\e_sqlite3.dll
+C:\Users\johne\Documents\Coding\BYU\IS 413\Mission11Assignment\backend\obj\Debug\net10.0\backend.sourcelink.json

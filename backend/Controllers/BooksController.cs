@@ -19,7 +19,8 @@ public class BooksController : ControllerBase
     public async Task<ActionResult<BookPageResponse>> GetBooks(
         [FromQuery] int page = 1,
         [FromQuery] int pageSize = 5,
-        [FromQuery] string sortOrder = "asc"
+        [FromQuery] string sortOrder = "asc",
+        [FromQuery] string? category = null
     )
     {
         if (page < 1)
@@ -37,7 +38,14 @@ public class BooksController : ControllerBase
             pageSize = 50;
         }
 
+        var normalizedCategory = string.IsNullOrWhiteSpace(category) ? null : category.Trim();
+
         var query = _context.Books.AsNoTracking();
+
+        if (!string.IsNullOrEmpty(normalizedCategory))
+        {
+            query = query.Where(b => b.Category == normalizedCategory);
+        }
 
         query = sortOrder.Equals("desc", StringComparison.OrdinalIgnoreCase)
             ? query.OrderByDescending(b => b.Title)
@@ -54,9 +62,23 @@ public class BooksController : ControllerBase
                 CurrentPage = page,
                 PageSize = pageSize,
                 TotalPages = (int)Math.Ceiling(totalBooks / (double)pageSize),
-                SortOrder = sortOrder.Equals("desc", StringComparison.OrdinalIgnoreCase) ? "desc" : "asc"
+                SortOrder = sortOrder.Equals("desc", StringComparison.OrdinalIgnoreCase) ? "desc" : "asc",
+                Category = normalizedCategory
             }
         );
+    }
+
+    [HttpGet("categories")]
+    public async Task<ActionResult<List<string>>> GetCategories()
+    {
+        var categories = await _context
+            .Books.AsNoTracking()
+            .Select(b => b.Category)
+            .Distinct()
+            .OrderBy(c => c)
+            .ToListAsync();
+
+        return Ok(categories);
     }
 }
 
@@ -73,4 +95,6 @@ public class BookPageResponse
     public int TotalPages { get; set; }
 
     public string SortOrder { get; set; } = "asc";
+
+    public string? Category { get; set; }
 }
