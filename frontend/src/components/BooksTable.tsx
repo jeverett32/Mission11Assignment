@@ -2,9 +2,10 @@ import type { Book } from "../types/books";
 
 type BooksTableProps = {
   books: Book[];
+  onAddToCart: (book: Book) => void;
 };
 
-function BooksTable({ books }: BooksTableProps) {
+function BooksTable({ books, onAddToCart }: BooksTableProps) {
   return (
     <div className="table-responsive">
       <table className="table table-striped table-hover align-middle">
@@ -18,6 +19,7 @@ function BooksTable({ books }: BooksTableProps) {
             <th>Category</th>
             <th>Pages</th>
             <th>Price</th>
+            <th>Cart</th>
           </tr>
         </thead>
         <tbody>
@@ -31,6 +33,11 @@ function BooksTable({ books }: BooksTableProps) {
               <td>{book.category}</td>
               <td>{book.pageCount}</td>
               <td>${book.price.toFixed(2)}</td>
+              <td>
+                <button className="btn btn-sm btn-primary" onClick={() => onAddToCart(book)}>
+                  Add
+                </button>
+              </td>
             </tr>
           ))}
         </tbody>
