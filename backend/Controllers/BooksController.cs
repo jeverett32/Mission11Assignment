@@ -68,6 +68,82 @@ public class BooksController : ControllerBase
         );
     }
 
+    [HttpGet("{id:int}")]
+    public async Task<ActionResult<Book>> GetBook(int id)
+    {
+        var book = await _context.Books.AsNoTracking().FirstOrDefaultAsync(b => b.BookId == id);
+        if (book is null)
+        {
+            return NotFound();
+        }
+
+        return Ok(book);
+    }
+
+    [HttpPost]
+    public async Task<ActionResult<Book>> CreateBook([FromBody] Book book)
+    {
+        if (book is null)
+        {
+            return BadRequest();
+        }
+
+        book.BookId = 0;
+
+        _context.Books.Add(book);
+        await _context.SaveChangesAsync();
+
+        return CreatedAtAction(nameof(GetBook), new { id = book.BookId }, book);
+    }
+
+    [HttpPut("{id:int}")]
+    public async Task<IActionResult> UpdateBook(int id, [FromBody] Book book)
+    {
+        if (book is null)
+        {
+            return BadRequest();
+        }
+
+        if (book.BookId != 0 && book.BookId != id)
+        {
+            return BadRequest("BookId in body must match route id.");
+        }
+
+        var existing = await _context.Books.FirstOrDefaultAsync(b => b.BookId == id);
+        if (existing is null)
+        {
+            return NotFound();
+        }
+
+        existing.Title = book.Title;
+        existing.Author = book.Author;
+        existing.Publisher = book.Publisher;
+        existing.Isbn = book.Isbn;
+        existing.Classification = book.Classification;
+        existing.Category = book.Category;
+        existing.PageCount = book.PageCount;
+        existing.Price = book.Price;
+
+        await _context.SaveChangesAsync();
+
+        return NoContent();
+    }
+
+    [HttpDelete("{id:int}")]
+    public async Task<IActionResult> DeleteBook(int id)
+    {
+        var book = await _context.Books.FirstOrDefaultAsync(b => b.BookId == id);
+        if (book is null)
+        {
+            return NotFound();
+        }
+
+        _context.Books.Remove(book);
+        await _context.SaveChangesAsync();
+
+        return NoContent();
+    }
+
     [HttpGet("categories")]
     public async Task<ActionResult<List<string>>> GetCategories()
     {

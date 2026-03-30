@@ -18,15 +18,22 @@ builder.Services.AddCors(options =>
         "AllowFrontend",
         policy =>
         {
-            policy
-                .WithOrigins(
-                    "http://localhost:3000",
-                    "https://localhost:3000",
-                    "http://localhost:5173",
-                    "https://localhost:5173"
-                )
-                .AllowAnyHeader()
-                .AllowAnyMethod();
+            if (builder.Environment.IsDevelopment())
+            {
+                policy
+                    .WithOrigins(
+                        "http://localhost:3000",
+                        "https://localhost:3000",
+                        "http://localhost:5173",
+                        "https://localhost:5173"
+                    )
+                    .AllowAnyHeader()
+                    .AllowAnyMethod();
+            }
+            else
+            {
+                policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
+            }
         }
     );
 });
