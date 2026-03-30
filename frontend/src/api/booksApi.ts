@@ -1,6 +1,6 @@
 import type { Book, BookPageResponse, SortOrder } from "../types/books";
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? "https://bookstore-a2d9eva0e0ayfac9.westus2-01.azurewebsites.net/api/";
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? "https://bookstore-a2d9eva0e0ayfac9.westus2-01.azurewebsites.net";
 
 export async function fetchBooksPage(options: {
   page: number;
