@@ -1,0 +1,35 @@
+# Visual Studio / IDE
+.vs/
+.vscode/
+.idea/
+
+# OS junk
+.DS_Store
+Thumbs.db
+
+# .NET build output
+**/bin/
+**/obj/
+
+# Node / frontend build output
+**/node_modules/
+**/dist/
+**/dist-ssr/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Local environment files
+.env
+.env.*
+*.local
+!.env.example
+
+# Local example/scratch content not intended for submission
+example/
