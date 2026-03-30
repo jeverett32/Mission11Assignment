@@ -8,7 +8,7 @@ import PaginationControls from "../components/PaginationControls";
 import { useCart } from "../context/CartContext";
 import type { Book, BookPageResponse, SortOrder } from "../types/books";
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? "http://localhost:4000";
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? "https://bookstore-a2d9eva0e0ayfac9.westus2-01.azurewebsites.net/api/Books";
 
 function parseNumber(value: string | null, fallback: number) {
   const parsed = Number(value);
